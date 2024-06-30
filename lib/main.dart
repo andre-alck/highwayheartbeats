@@ -92,7 +92,7 @@ class CalculateDistanceStateState extends State<CalculateDistanceState> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: StreamBuilder(
-        stream: Geolocator.getPositionStream(),
+        stream: Geolocator.getPositionStream(locationSettings: LocationSettings(distanceFilter: counter * 100)),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             if (counter == 0) {
@@ -116,7 +116,7 @@ class CalculateDistanceStateState extends State<CalculateDistanceState> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('$distanceInMeters KM', style: getDefaultAppFont()),
+                  Text('${distanceInMeters.toStringAsFixed(1)} KM', style: getDefaultAppFont()),
                   const SizedBox(height: 100),
                   IconButton(
                       onPressed: () {
@@ -150,7 +150,7 @@ class ShareDistance extends StatelessWidget {
   Widget build(BuildContext context) {
     var congratulationsOneMoreRoundConcluded =
         'Congratulations. One more round concluded.';
-    var distanceKM = '$distance KM.';
+    var distanceKM = '${distance.toStringAsFixed(1)} KM';
     return Scaffold(
         backgroundColor: Colors.black,
         body: Stack(
@@ -176,7 +176,7 @@ class ShareDistance extends StatelessWidget {
                     IconButton(
                         onPressed: () {
                           Share.share(
-                              '$congratulationsOneMoreRoundConcluded $distanceKM');
+                              '$congratulationsOneMoreRoundConcluded ${distance.toStringAsFixed(1)} KM.');
                         },
                         icon: const Icon(
                           Icons.share,
